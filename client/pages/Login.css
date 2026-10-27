@@ -1,0 +1,268 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --dark-blue: #001d39;
+  --bit-dark-blue: #0a4174;
+  --sky-blue: #07969f;
+  --pale-blue: #6ea2b3;
+  --light-blue: #7bbde8;
+  --white-blue: #cff0fe;
+
+  --card: #0b2a4a;
+  --border: rgba(110, 162, 179, 0.5);
+  --muted: #8fb3c4;
+  --height: 3.3rem;
+}
+
+html {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  letter-spacing: 0.3px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.main {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: linear-gradient(
+    var(--dark-blue),
+    var(--bit-dark-blue),
+    var(--sky-blue)
+  );
+}
+
+/* Card (solid, so the label notch blends in) */
+.login-form {
+  width: 100%;
+  max-width: 420px;
+  padding: 2.2rem 2.2rem 1.8rem;
+
+  background: var(--card);
+  border: 1px solid rgba(207, 240, 254, 0.14);
+  border-radius: 16px;
+  box-shadow:
+    0 24px 60px rgba(0, 10, 25, 0.45),
+    inset 0 1px 0 rgba(207, 240, 254, 0.08);
+}
+
+.login-form h1 {
+  margin-bottom: 1.6rem;
+  text-align: center;
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: var(--white-blue);
+}
+
+/* Input + notch label */
+.input-group {
+  position: relative;
+  height: var(--height);
+  margin: 1.5rem 0;
+}
+
+.input-group input {
+  width: 100%;
+  height: 100%;
+  padding: 0 1rem;
+
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--white-blue);
+  caret-color: var(--light-blue);
+  background: transparent;
+  color-scheme: dark;
+
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  outline: none;
+
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input-group input:hover {
+  border-color: var(--pale-blue);
+}
+
+.input-group input:focus {
+  border-color: var(--light-blue);
+  box-shadow: 0 0 0 3px rgba(123, 189, 232, 0.18);
+}
+
+.input-group label {
+  position: absolute;
+  left: 0.8rem;
+  top: 50%;
+  padding: 0 6px;
+
+  font-size: 1rem;
+  line-height: 1;
+  color: var(--muted);
+  background: var(--card);
+  pointer-events: none;
+
+  transform: translateY(-50%);
+  transform-origin: left center;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.input-group input:focus ~ label,
+.input-group input:not(:placeholder-shown) ~ label,
+.input-group input:-webkit-autofill ~ label {
+  transform: translateY(calc(-50% - var(--height) / 2)) scale(0.82);
+  color: var(--pale-blue);
+}
+
+.input-group input:focus ~ label {
+  color: var(--light-blue);
+}
+
+/* Autofill stays dark */
+.input-group input:-webkit-autofill,
+.input-group input:-webkit-autofill:hover,
+.input-group input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--white-blue);
+  -webkit-box-shadow: 0 0 0 1000px var(--card) inset;
+  box-shadow: 0 0 0 1000px var(--card) inset;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+/* Hide Edge's own password icon */
+.input-group input::-ms-reveal,
+.input-group input::-ms-clear {
+  display: none;
+}
+
+/* Password eye */
+.input-group:has(.password-toggle) input {
+  padding-right: 3rem;
+}
+
+.password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+
+  display: flex;
+  padding: 6px;
+  font-size: 1.1rem;
+
+  color: var(--pale-blue);
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.password-toggle:hover {
+  color: var(--white-blue);
+}
+
+.password-toggle:focus-visible,
+.main-btn:focus-visible,
+.switch-link:focus-visible {
+  outline: 2px solid var(--light-blue);
+  outline-offset: 3px;
+}
+
+/* Button */
+.main-btn {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+
+  width: 100%;
+  margin-top: 0.6rem;
+  padding: 13px 25px;
+
+  font-family: inherit;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  color: #fff;
+
+  background: linear-gradient(90deg, #0a5f94, #0b8a99);
+  border: 1px solid #5cc3d9;
+  border-radius: 10px;
+  box-shadow:
+    0 8px 20px rgba(11, 138, 153, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.main-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(90deg, #0b8a99, #0a5f94);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.main-btn:hover {
+  border-color: #8fe0f0;
+  box-shadow:
+    0 12px 26px rgba(92, 195, 217, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  transform: translateY(-2px);
+}
+
+.main-btn:hover::before {
+  opacity: 1;
+}
+
+.main-btn:active {
+  transform: translateY(0);
+}
+
+/* "Create one" line */
+.switch-text {
+  margin-top: 1.4rem;
+  text-align: center;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.switch-link {
+  font-weight: 600;
+  color: var(--light-blue);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.switch-link:hover {
+  color: var(--white-blue);
+  border-bottom-color: var(--white-blue);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .main {
+    padding: 1rem;
+  }
+
+  .login-form {
+    padding: 1.7rem 1.3rem 1.4rem;
+  }
+
+  .login-form h1 {
+    font-size: 1.9rem;
+  }
+}
