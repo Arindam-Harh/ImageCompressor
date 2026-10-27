@@ -1,0 +1,159 @@
+.account-page {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  letter-spacing: 0.3px;
+  -webkit-font-smoothing: antialiased;
+
+  background:
+    radial-gradient(circle at 20% 15%, rgba(7, 150, 159, 0.28), transparent 45%),
+    radial-gradient(circle at 85% 85%, rgba(123, 189, 232, 0.18), transparent 45%),
+    linear-gradient(180deg, #06223f, #0a3560);
+}
+
+.account-card {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  padding: 3.4rem 2.2rem 2rem;
+  text-align: center;
+
+  background: linear-gradient(180deg, #0f3558, #0b2a4a);
+  border: 1px solid rgba(207, 240, 254, 0.14);
+  border-radius: 18px;
+  box-shadow:
+    0 24px 60px rgba(0, 10, 25, 0.5),
+    inset 0 1px 0 rgba(207, 240, 254, 0.1);
+}
+
+/* Avatar sits half outside the card */
+.account-avatar {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.6rem;
+  height: 4.6rem;
+
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: #fff;
+
+  background: linear-gradient(135deg, #0a5f94, #0b8a99);
+  border: 3px solid #0b2a4a;
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 2px #5cc3d9,
+    0 10px 24px rgba(11, 138, 153, 0.45);
+}
+
+.account-card h1 {
+  font-size: 1.7rem;
+  font-weight: 600;
+  color: #cff0fe;
+  word-break: break-word;
+}
+
+.account-card p {
+  margin-top: 0.7rem;
+  padding-bottom: 1.6rem;
+  font-size: 0.97rem;
+  line-height: 1.6;
+  color: #8fb3c4;
+  border-bottom: 1px solid rgba(207, 240, 254, 0.1);
+}
+
+.account-actions {
+  display: flex;
+  gap: 0.8rem;
+  margin-top: 1.6rem;
+}
+
+.account-actions button {
+  flex: 1;
+  padding: 12px 20px;
+
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+
+  border-radius: 10px;
+  cursor: pointer;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease,
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+/* Back: filled, matches the main buttons */
+.account-back-btn {
+  color: #fff;
+  background: linear-gradient(90deg, #0a5f94, #0b8a99);
+  border: 1px solid #5cc3d9;
+  box-shadow:
+    0 8px 20px rgba(11, 138, 153, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.account-back-btn:hover {
+  background: linear-gradient(90deg, #0b8a99, #0a5f94);
+  border-color: #8fe0f0;
+  transform: translateY(-2px);
+}
+
+/* Logout: quiet outline, turns soft red only on hover */
+.account-logout-btn {
+  color: #cff0fe;
+  background: transparent;
+  border: 1.5px solid rgba(110, 162, 179, 0.5);
+}
+
+.account-logout-btn:hover {
+  color: #ffb4b4;
+  background: rgba(255, 120, 120, 0.1);
+  border-color: rgba(255, 140, 140, 0.6);
+  transform: translateY(-2px);
+}
+
+.account-actions button:active {
+  transform: translateY(0);
+}
+
+.account-actions button:focus-visible {
+  outline: 2px solid #8fe0f0;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .account-actions button {
+    transition-duration: 0.01ms;
+  }
+}
+
+@media (max-width: 480px) {
+  .account-card {
+    padding: 3.2rem 1.3rem 1.5rem;
+  }
+
+  .account-card h1 {
+    font-size: 1.5rem;
+  }
+
+  .account-actions {
+    flex-direction: column;
+  }
+  button{
+    margin: 0.25rem;
+  }
+}
