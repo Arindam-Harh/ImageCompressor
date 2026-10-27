@@ -1,0 +1,186 @@
+.home-page {
+  --dark-blue: #001d39;
+  --bit-dark-blue: #0a4174;
+  --sky-blue: #07969f;
+  --pale-blue: #6ea2b3;
+  --light-blue: #7bbde8;
+  --white-blue: #cff0fe;
+  --card: #0b2a4a;
+  --muted: #8fb3c4;
+
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  letter-spacing: 0.3px;
+
+  background: linear-gradient(
+    var(--dark-blue),
+    var(--bit-dark-blue),
+    var(--sky-blue)
+  );
+}
+
+.home-card {
+  width: 100%;
+  max-width: 440px;
+  padding: 2.2rem 2.2rem 2rem;
+
+  background: var(--card);
+  border: 1px solid rgba(207, 240, 254, 0.14);
+  border-radius: 16px;
+  box-shadow:
+    0 24px 60px rgba(0, 10, 25, 0.45),
+    inset 0 1px 0 rgba(207, 240, 254, 0.08);
+}
+
+.home-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.home-form h1 {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--white-blue);
+}
+
+.home-hint {
+  margin: 0.5rem 0 1.8rem;
+  text-align: center;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.home-label {
+  margin-bottom: 0.6rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--light-blue);
+}
+
+/* File input */
+.file-selection {
+  width: 100%;
+  padding: 0.6rem;
+
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: var(--muted);
+
+  background: rgba(0, 29, 57, 0.35);
+  border: 1.5px dashed rgba(110, 162, 179, 0.55);
+  border-radius: 10px;
+  cursor: pointer;
+
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.file-selection:hover {
+  border-color: var(--light-blue);
+  background: rgba(123, 189, 232, 0.08);
+}
+
+.file-selection:focus-visible {
+  outline: 2px solid var(--light-blue);
+  outline-offset: 3px;
+}
+
+.file-selection::file-selector-button {
+  margin-right: 0.9rem;
+  padding: 0.5rem 1rem;
+
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--white-blue);
+
+  background: rgba(123, 189, 232, 0.15);
+  border: 1px solid rgba(110, 162, 179, 0.55);
+  border-radius: 8px;
+  cursor: pointer;
+
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.file-selection::file-selector-button:hover {
+  background: rgba(123, 189, 232, 0.28);
+  border-color: var(--light-blue);
+}
+
+/* Button */
+.home-btn {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+
+  margin-top: 1.6rem;
+  padding: 13px 25px;
+
+  font-family: inherit;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  color: #fff;
+
+  background: linear-gradient(90deg, #0a5f94, #0b8a99);
+  border: 1px solid #5cc3d9;
+  border-radius: 10px;
+  box-shadow:
+    0 8px 20px rgba(11, 138, 153, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.home-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(90deg, #0b8a99, #0a5f94);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.home-btn:hover {
+  border-color: #8fe0f0;
+  box-shadow:
+    0 12px 26px rgba(92, 195, 217, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  transform: translateY(-2px);
+}
+
+.home-btn:hover::before {
+  opacity: 1;
+}
+
+.home-btn:active {
+  transform: translateY(0);
+}
+
+.home-btn:focus-visible {
+  outline: 2px solid #8fe0f0;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-page * {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-card {
+    padding: 1.7rem 1.3rem 1.5rem;
+  }
+
+  .home-form h1 {
+    font-size: 1.7rem;
+  }
+}
