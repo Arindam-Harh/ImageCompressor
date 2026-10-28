@@ -1,12 +1,14 @@
 import mongoose from "mongoose";
 
-export const connectToDB = async (url) => {
-  if (!url) {
+const URI = "some URI";
+
+export const connectToDB = async () => {
+  if (!URI) {
     console.log("URL is missing, could not connect to Database");
     process.exit(1);
   }
   try {
-    await mongoose.connect(url);
+    await mongoose.connect(URI);
     console.log("Database Connection Successful");
   } catch (error) {
     console.log("Database Connection Failed", error.message);
