@@ -1,13 +1,13 @@
 import express from "express";
+import "dotenv/config";
 import { connectToDB } from "./utils/connect.js";
+import { router } from "./routes/auth-route.js";
 
 const app = express();
 
 const PORT = 5000;
 
-app.get("/", (req, res) => {
-  res.send("Hello from Backend");
-});
+app.use("/", router);
 
 connectToDB().then(() => {
   app.listen(PORT, () => {
