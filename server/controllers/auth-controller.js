@@ -10,5 +10,6 @@ export const handleUserRegister = async(req, res) => {
         return res.status(200).json(userData);
     } catch (error) {
         console.error("Error from Register Route :" ,error);
+        return res.status(500).json({ message: "Internal Server Error" });
     }
 }
