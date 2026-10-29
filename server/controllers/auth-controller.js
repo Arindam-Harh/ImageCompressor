@@ -17,3 +17,23 @@ export const handleUserRegister = async (req, res) => {
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+export const handleUserLogin = async (req, res) => {
+  try {
+    const userData = req.body;
+    if (!userData || Object.keys(userData).length === 0) {
+      return res.status(400).json({ message: "Data not found" });
+    }
+    const emailExists = await User.findOne({ email: userData.email });
+    if (!emailExists) {
+      return res.status(404).json({ message: "Email Not Found" });
+    }
+    if (emailExists.password !== userData.password) {
+      return res.status(401).json({ message: "Incorrect Paasword" });
+    }
+    return res.status(200).json({ message: "Login successful" });
+  } catch (error) {
+    console.error("Error from Login Route :", error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
