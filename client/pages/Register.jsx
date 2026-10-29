@@ -18,7 +18,7 @@ export const Register = () => {
     const { name, value } = e.target;
     setUser((prev) => ({ ...prev, [name]: value }));
   };
-  const handelFormSubmit = async (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await fetch("http://localhost:5000/register", {
@@ -44,7 +44,7 @@ export const Register = () => {
   };
   return (
     <div className="main">
-      <form className="register-form" onSubmit={handelFormSubmit}>
+      <form className="register-form" onSubmit={handleFormSubmit}>
         <h1>Register</h1>
 
         <div className="input-group">
