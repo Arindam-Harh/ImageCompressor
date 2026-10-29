@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "./Register.css";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const defaultUser = {
   username: "",
@@ -11,7 +13,7 @@ const defaultUser = {
 export const Register = () => {
   const [user, setUser] = useState(defaultUser);
   const [showPassword, setShowPassword] = useState(false);
-
+  const navigate = useNavigate();
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUser((prev) => ({ ...prev, [name]: value }));
@@ -27,13 +29,17 @@ export const Register = () => {
         body: JSON.stringify(user),
       });
       if (response.ok) {
-        console.log("Registration successful", response);
+        toast.success(`Registration Successful`);
         setUser(defaultUser);
+        navigate("/login");
+      } else if (response.status === 409) {
+        toast.error(`Email already exists`);
       } else {
-        alert(`Registration Failed`);
+        console.error("Registration error:", error);
+        toast.error(`Registration Failed`);
       }
     } catch (error) {
-      console.error(error);
+      toast.error(`Registration Failed`);
     }
   };
   return (

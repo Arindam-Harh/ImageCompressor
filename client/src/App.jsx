@@ -1,8 +1,5 @@
-import {
-  createBrowserRouter,
-  RouterProvider,
-  Navigate,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import { Login } from "../pages/Login";
 import { Register } from "../pages/Register";
 import { Home } from "../pages/Home";
@@ -30,12 +27,17 @@ const router = createBrowserRouter([
       },
       {
         path: "/account",
-        element: <Account/>
-      }
+        element: <Account />,
+      },
     ],
   },
 ]);
 
 export const App = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <RouterProvider router={router} />
+      <ToastContainer position="top-right" autoClose={3000} theme="colored" />
+    </>
+  );
 };
