@@ -28,7 +28,8 @@ export const handleUserLogin = async (req, res) => {
     if (!emailExists) {
       return res.status(404).json({ message: "Email Not Found" });
     }
-    if (emailExists.password !== userData.password) {
+    const isPasswordCorrect = await emailExists.comparePassword(userData.password);
+    if (!isPasswordCorrect) {
       return res.status(401).json({ message: "Incorrect Paasword" });
     }
     return res.status(200).json({ message: "Login successful" });
