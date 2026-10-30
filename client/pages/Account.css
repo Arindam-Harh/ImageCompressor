@@ -3,78 +3,138 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.5rem;
+  padding: 2rem 1.5rem;
 
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   letter-spacing: 0.3px;
   -webkit-font-smoothing: antialiased;
 
   background:
-    radial-gradient(circle at 20% 15%, rgba(7, 150, 159, 0.28), transparent 45%),
-    radial-gradient(circle at 85% 85%, rgba(123, 189, 232, 0.18), transparent 45%),
+    radial-gradient(circle at 15% 10%, rgba(7, 150, 159, 0.25), transparent 45%),
+    radial-gradient(circle at 90% 90%, rgba(123, 189, 232, 0.16), transparent 45%),
     linear-gradient(180deg, #06223f, #0a3560);
 }
 
 .account-card {
   position: relative;
   width: 100%;
-  max-width: 440px;
-  padding: 3.4rem 2.2rem 2rem;
-  text-align: center;
+  max-width: 460px;
+  overflow: hidden;
 
-  background: linear-gradient(180deg, #0f3558, #0b2a4a);
+  background: #0b2a4a;
   border: 1px solid rgba(207, 240, 254, 0.14);
   border-radius: 18px;
   box-shadow:
     0 24px 60px rgba(0, 10, 25, 0.5),
-    inset 0 1px 0 rgba(207, 240, 254, 0.1);
+    inset 0 1px 0 rgba(207, 240, 254, 0.08);
 }
 
-/* Avatar sits half outside the card */
+/* Banner */
+.account-banner {
+  height: 96px;
+  background:
+    radial-gradient(circle at 80% 20%, rgba(143, 224, 240, 0.35), transparent 50%),
+    linear-gradient(120deg, #0a4174, #0b8a99);
+}
+
+/* Avatar overlaps the banner */
 .account-avatar {
   position: absolute;
-  top: 0;
+  top: 96px;
   left: 50%;
   transform: translate(-50%, -50%);
 
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 4.6rem;
-  height: 4.6rem;
+  width: 5rem;
+  height: 5rem;
 
-  font-size: 1.9rem;
+  font-size: 2rem;
   font-weight: 700;
   color: #fff;
 
   background: linear-gradient(135deg, #0a5f94, #0b8a99);
-  border: 3px solid #0b2a4a;
+  border: 4px solid #0b2a4a;
   border-radius: 50%;
-  box-shadow:
-    0 0 0 2px #5cc3d9,
-    0 10px 24px rgba(11, 138, 153, 0.45);
+  box-shadow: 0 10px 24px rgba(0, 10, 25, 0.45);
 }
 
-.account-card h1 {
-  font-size: 1.7rem;
+.account-body {
+  padding: 3.4rem 2rem 2rem;
+  text-align: center;
+}
+
+.account-body h1 {
+  font-size: 1.6rem;
   font-weight: 600;
   color: #cff0fe;
   word-break: break-word;
 }
 
-.account-card p {
-  margin-top: 0.7rem;
-  padding-bottom: 1.6rem;
-  font-size: 0.97rem;
+.account-sub {
+  margin-top: 0.6rem;
+  font-size: 0.95rem;
   line-height: 1.6;
   color: #8fb3c4;
-  border-bottom: 1px solid rgba(207, 240, 254, 0.1);
 }
 
+/* Details */
+.account-details {
+  margin-top: 1.6rem;
+  text-align: left;
+
+  background: rgba(0, 21, 43, 0.45);
+  border: 1px solid rgba(207, 240, 254, 0.1);
+  border-radius: 12px;
+}
+
+.account-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1.1rem;
+}
+
+.account-row + .account-row {
+  border-top: 1px solid rgba(207, 240, 254, 0.08);
+}
+
+.account-key {
+  flex-shrink: 0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #6ea2b3;
+}
+
+.account-value {
+  min-width: 0;
+  font-size: 0.95rem;
+  color: #cff0fe;
+  text-align: right;
+  word-break: break-all;
+}
+
+.account-badge {
+  padding: 0.2rem 0.7rem;
+
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #8fe0f0;
+
+  background: rgba(92, 195, 217, 0.12);
+  border: 1px solid rgba(92, 195, 217, 0.4);
+  border-radius: 999px;
+}
+
+/* Buttons */
 .account-actions {
   display: flex;
   gap: 0.8rem;
-  margin-top: 1.6rem;
+  margin-top: 1.8rem;
 }
 
 .account-actions button {
@@ -96,8 +156,19 @@
     color 0.25s ease;
 }
 
-/* Back: filled, matches the main buttons */
 .account-back-btn {
+  color: #cff0fe;
+  background: transparent;
+  border: 1.5px solid rgba(110, 162, 179, 0.5);
+}
+
+.account-back-btn:hover {
+  border-color: #7bbde8;
+  background: rgba(123, 189, 232, 0.1);
+  transform: translateY(-2px);
+}
+
+.account-logout-btn {
   color: #fff;
   background: linear-gradient(90deg, #0a5f94, #0b8a99);
   border: 1px solid #5cc3d9;
@@ -106,23 +177,9 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 
-.account-back-btn:hover {
+.account-logout-btn:hover {
   background: linear-gradient(90deg, #0b8a99, #0a5f94);
   border-color: #8fe0f0;
-  transform: translateY(-2px);
-}
-
-/* Logout: quiet outline, turns soft red only on hover */
-.account-logout-btn {
-  color: #cff0fe;
-  background: transparent;
-  border: 1.5px solid rgba(110, 162, 179, 0.5);
-}
-
-.account-logout-btn:hover {
-  color: #ffb4b4;
-  background: rgba(255, 120, 120, 0.1);
-  border-color: rgba(255, 140, 140, 0.6);
   transform: translateY(-2px);
 }
 
@@ -142,18 +199,15 @@
 }
 
 @media (max-width: 480px) {
-  .account-card {
-    padding: 3.2rem 1.3rem 1.5rem;
+  .account-body {
+    padding: 3.2rem 1.2rem 1.5rem;
   }
 
-  .account-card h1 {
-    font-size: 1.5rem;
+  .account-body h1 {
+    font-size: 1.4rem;
   }
 
   .account-actions {
     flex-direction: column;
-  }
-  button{
-    margin: 0.25rem;
   }
 }

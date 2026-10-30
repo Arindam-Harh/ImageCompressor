@@ -1,6 +1,7 @@
 import express from "express";
 import {
   handleUserLogin,
+  handleUserLogout,
   handleUserRegister,
 } from "../controllers/auth-controller.js";
 import { authMiddleware } from "../middlewares/auth-middleware.js";
@@ -15,3 +16,4 @@ router.get("/profile", authMiddleware, (req, res) => {
 });
 router.post("/register", handleUserRegister);
 router.post("/login", handleUserLogin);
+router.post("/logout", handleUserLogout);
