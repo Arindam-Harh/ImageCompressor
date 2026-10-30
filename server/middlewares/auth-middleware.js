@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import { User } from "../models/userModel.js";
 
 export const authMiddleware = async (req, res, next) => {
-  const token = req.header("Authorization");
+  const token = req.cookies.token;
   if (!token) {
     return res.status(401).json({ message: "Unauthorized user" });
   }
@@ -21,6 +21,7 @@ export const authMiddleware = async (req, res, next) => {
     );
     if (!verifiedUser) {
       return res.status(401).json({ message: "User not found" });
+
     }
     req.user = verifiedUser;
     req.token = jwtToken;

@@ -11,12 +11,15 @@ export const handleUserRegister = async (req, res) => {
       return res.status(409).json({ message: "Email already exists" });
     }
     const userCreated = await User.create(userData);
-    return res
-      .status(201)
-      .json({
-        message: "Registration successful",
-        token: await userCreated.generateToken(),
-      });
+    const token = await userCreated.generateToken();
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: false,
+      maxAge: 30 * 24 * 60 * 60 * 1000,
+    });
+    return res.status(201).json({
+      message: "Registration successful",
+    });
   } catch (error) {
     console.error("Error from Register Route :", error);
     return res.status(500).json({ message: "Internal Server Error" });
@@ -39,12 +42,15 @@ export const handleUserLogin = async (req, res) => {
     if (!isPasswordCorrect) {
       return res.status(401).json({ message: "Incorrect Paasword" });
     }
-    return res
-      .status(200)
-      .json({
-        message: "Login successful",
-        token: await emailExists.generateToken(),
-      });
+    const token = await emailExists.generateToken();
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: false,
+      maxAge: 30 * 24 * 60 * 60 * 1000,
+    });
+    return res.status(200).json({
+      message: "Login successful",
+    });
   } catch (error) {
     console.error("Error from Login Route :", error);
     return res.status(500).json({ message: "Internal Server Error" });
