@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useAuth } from "../src/context/AuthContext";
 import "./Login.css";
 
 const defaultUser = {
@@ -13,6 +14,7 @@ export const Login = () => {
   const [user, setUser] = useState(defaultUser);
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const { checkAuth } = useAuth();
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUser((prev) => ({ ...prev, [name]: value }));
@@ -22,12 +24,14 @@ export const Login = () => {
     try {
       const response = await fetch("http://localhost:5000/login", {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(user),
       });
       if (response.ok) {
+        await checkAuth();
         toast.success(`Login Successful`);
         setUser(defaultUser);
         navigate("/");

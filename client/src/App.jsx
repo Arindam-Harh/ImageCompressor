@@ -6,6 +6,7 @@ import { Home } from "../pages/Home";
 import { ErrorPage } from "../pages/ErrorPage";
 import { AppLayout } from "../components/Layout/AppLayout";
 import { Account } from "../pages/Account";
+import { ProtectedRoute } from "../components/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -14,20 +15,25 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        index: true,
-        element: <Home />,
+        element: <ProtectedRoute />,
+        children: [
+          {
+            index: true,
+            element: <Home />,
+          },
+          {
+            path: "account",
+            element: <Account />,
+          },
+        ],
       },
       {
-        path: "/login",
+        path: "login",
         element: <Login />,
       },
       {
-        path: "/register",
+        path: "register",
         element: <Register />,
-      },
-      {
-        path: "/account",
-        element: <Account />,
       },
     ],
   },

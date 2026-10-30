@@ -3,6 +3,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "./Register.css";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../src/context/AuthContext";
 
 const defaultUser = {
   username: "",
@@ -14,6 +15,7 @@ export const Register = () => {
   const [user, setUser] = useState(defaultUser);
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const { checkAuth } = useAuth();
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUser((prev) => ({ ...prev, [name]: value }));
@@ -23,12 +25,14 @@ export const Register = () => {
     try {
       const response = await fetch("http://localhost:5000/register", {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(user),
       });
       if (response.ok) {
+        await checkAuth();
         toast.success(`Registration Successful`);
         setUser(defaultUser);
         navigate("/login");
