@@ -32,16 +32,11 @@ export const Login = () => {
       });
       if (response.ok) {
         await checkAuth();
-        toast.success(`Login Successful`);
-        setUser(defaultUser);
+        toast.success("Login Successful");
         navigate("/");
-      } else if (response.status === 404) {
-        toast.error(`Email not found`);
-      } else if (response.status === 401) {
-        toast.error(`Incorrect Password`);
       } else {
-        console.error("Login failed with status:", response.status);
-        toast.error(`Login Failed`);
+        const data = await response.json();
+        toast.error(data.message || "Login Failed");
       }
     } catch (error) {
       toast.error(`Login Failed`);
@@ -92,7 +87,7 @@ export const Login = () => {
         </button>
 
         <p className="switch-text">
-          Don't have an account?
+          Don't have an account?&nbsp;
           <NavLink to="/register" className="switch-link">
             Create one
           </NavLink>

@@ -4,6 +4,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import { connectToDB } from "./utils/connect.js";
 import { router } from "./routes/auth-route.js";
+import { errorMiddleware } from "./middlewares/error-middleware.js";
 
 const app = express();
 
@@ -18,6 +19,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use("/", router);
+
+app.use(errorMiddleware);
 
 connectToDB().then(() => {
   app.listen(PORT, () => {

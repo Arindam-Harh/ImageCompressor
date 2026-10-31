@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "./Register.css";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../src/context/AuthContext";
 
 const defaultUser = {
@@ -33,17 +33,15 @@ export const Register = () => {
       });
       if (response.ok) {
         await checkAuth();
-        toast.success(`Registration Successful`);
-        setUser(defaultUser);
-        navigate("/login");
-      } else if (response.status === 409) {
-        toast.error(`Email already exists`);
+        toast.success("Registration Successful");
+        navigate("/");
       } else {
-        console.error("Registration error:", error);
-        toast.error(`Registration Failed`);
+        const data = await response.json();
+        toast.error(data.message || "Registration Failed");
       }
     } catch (error) {
-      toast.error(`Registration Failed`);
+      console.error("Registration error:", error);
+      toast.error("Registration Failed");
     }
   };
   return (
@@ -102,6 +100,12 @@ export const Register = () => {
         <button type="submit" className="main-btn">
           Register
         </button>
+        <p className="switch-text">
+          Already have an account?&nbsp;
+          <NavLink to="/login" className="switch-link">
+            Login
+          </NavLink>
+        </p>
       </form>
     </div>
   );

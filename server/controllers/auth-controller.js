@@ -1,14 +1,18 @@
 import { User } from "../models/userModel.js";
 
-export const handleUserRegister = async (req, res) => {
+export const handleUserRegister = async (req, res, next) => {
   try {
     const userData = req.body;
     if (!userData || Object.keys(userData).length === 0) {
-      return res.status(400).json({ message: "Data not found" });
+      const error = new Error("Data not found");
+      error.statusCode = 400;
+      return next(error);
     }
     const emailExists = await User.findOne({ email: userData.email });
     if (emailExists) {
-      return res.status(409).json({ message: "Email already exists" });
+      const error = new Error("Email already exists");
+      error.statusCode = 409;
+      return next(error);
     }
     const userCreated = await User.create(userData);
     const token = await userCreated.generateToken();
@@ -22,25 +26,31 @@ export const handleUserRegister = async (req, res) => {
     });
   } catch (error) {
     console.error("Error from Register Route :", error);
-    return res.status(500).json({ message: "Internal Server Error" });
+    return next(error);
   }
 };
 
-export const handleUserLogin = async (req, res) => {
+export const handleUserLogin = async (req, res, next) => {
   try {
     const userData = req.body;
     if (!userData || Object.keys(userData).length === 0) {
-      return res.status(400).json({ message: "Data not found" });
+      const error = new Error("Data not found");
+      error.statusCode = 400;
+      return next(error);
     }
     const emailExists = await User.findOne({ email: userData.email });
     if (!emailExists) {
-      return res.status(404).json({ message: "Email Not Found" });
+      const error = new Error("Email does not exist");
+      error.statusCode = 404;
+      return next(error);
     }
     const isPasswordCorrect = await emailExists.comparePassword(
       userData.password,
     );
     if (!isPasswordCorrect) {
-      return res.status(401).json({ message: "Incorrect Paasword" });
+      const error = new Error("Incorrect Password");
+      error.statusCode = 401;
+      return next(error);
     }
     const token = await emailExists.generateToken();
     res.cookie("token", token, {
@@ -53,11 +63,11 @@ export const handleUserLogin = async (req, res) => {
     });
   } catch (error) {
     console.error("Error from Login Route :", error);
-    return res.status(500).json({ message: "Internal Server Error" });
+    next(error);
   }
 };
 
-export const handleUserLogout = async (req, res) => {
+export const handleUserLogout = async (req, res, next) => {
   try {
     res.clearCookie("token", {
       httpOnly: true,
@@ -68,9 +78,11 @@ export const handleUserLogout = async (req, res) => {
     return res.status(200).json({
       message: "Logout successful",
     });
-  } catch (error) {
-    return res.status(500).json({
-      message: "Logout failed",
-    });
+  } catch (err) {
+    console.error("Error from Logout page", err);
+
+    const error = new Error("Logout failed");
+    error.statusCode = 500;
+    return next(error);
   }
 };

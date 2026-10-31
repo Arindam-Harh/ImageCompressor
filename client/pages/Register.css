@@ -246,3 +246,28 @@ html {
     font-size: 1.9rem;
   }
 }
+/* "Login" line */
+.switch-text {
+  margin-top: 1.4rem;
+  text-align: center;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.switch-link {
+  font-weight: 600;
+  color: var(--light-blue);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.switch-link:hover {
+  color: var(--white-blue);
+  border-bottom-color: var(--white-blue);
+}
+
+.switch-link:focus-visible {
+  outline: 2px solid var(--light-blue);
+  outline-offset: 3px;
+}
