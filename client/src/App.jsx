@@ -7,6 +7,8 @@ import { ErrorPage } from "../pages/ErrorPage";
 import { AppLayout } from "../components/Layout/AppLayout";
 import { Account } from "../pages/Account";
 import { ProtectedRoute } from "../components/ProtectedRoute";
+import { Compress } from "../pages/Compress";
+import { Convert } from "../pages/Convert";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +36,14 @@ const router = createBrowserRouter([
       {
         path: "register",
         element: <Register />,
+      },
+      {
+        path: "compress",
+        element: <Compress />,
+      },
+      {
+        path: "convert",
+        element: <Convert />,
       },
     ],
   },
