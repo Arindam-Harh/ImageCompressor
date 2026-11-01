@@ -9,11 +9,11 @@ import { errorMiddleware } from "./middlewares/error-middleware.js";
 const app = express();
 
 const PORT = process.env.PORT || 5000;
-
 const allowedOrigins = [
   "http://localhost:5173",
+  "https://image-compressor-converter.netlify.app",
   process.env.CLIENT_URL,
-];
+].filter(Boolean);
 
 app.use(cors({
   origin: allowedOrigins,
