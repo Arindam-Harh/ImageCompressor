@@ -2,7 +2,9 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuth } from "../src/context/AuthContext";
 import { Loading } from "../components/Loading";
+import { url } from "../config/api.js";
 import "./Account.css";
+
 
 export const Account = () => {
   const navigate = useNavigate();
@@ -19,7 +21,7 @@ export const Account = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch("http://localhost:5000/logout", {
+      const response = await fetch(`${url}/logout`, {
         method: "POST",
         credentials: "include",
       });

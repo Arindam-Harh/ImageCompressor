@@ -1,0 +1,1 @@
+export const url = "https://image-compressor-api-8zqo.onrender.com";

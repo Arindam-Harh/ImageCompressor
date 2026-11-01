@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import "./Register.css";
 import { toast } from "react-toastify";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../src/context/AuthContext";
+import { url } from "../config/api.js";
+import "./Register.css";
 
 const defaultUser = {
   username: "",
@@ -23,7 +24,7 @@ export const Register = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/register", {
+      const response = await fetch(`${url}/register`, {
         method: "POST",
         credentials: "include",
         headers: {

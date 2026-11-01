@@ -3,7 +3,9 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuth } from "../src/context/AuthContext";
+import { url } from "../config/api.js";
 import "./Login.css";
+
 
 const defaultUser = {
   email: "",
@@ -22,7 +24,7 @@ export const Login = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/login", {
+      const response = await fetch(`${url}/login`, {
         method: "POST",
         credentials: "include",
         headers: {

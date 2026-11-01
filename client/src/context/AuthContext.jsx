@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { url } from "../../config/api.js";
 
 export const AuthContext = createContext();
 
@@ -9,7 +10,7 @@ export const AuthProvider = ({ children }) => {
 
   const checkAuth = async () => {
     try {
-      const response = await fetch("http://localhost:5000/profile", {
+      const response = await fetch(`${url}/profile`, {
         method: "GET",
         credentials: "include",
       });
