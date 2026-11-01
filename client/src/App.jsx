@@ -28,6 +28,18 @@ const router = createBrowserRouter([
             path: "account",
             element: <Account />,
           },
+          {
+            path: "compress",
+            element: <Compress />,
+          },
+          {
+            path: "convert",
+            element: <Convert />,
+          },
+          {
+            path: "history",
+            element: <History />,
+          },
         ],
       },
       {
@@ -38,18 +50,6 @@ const router = createBrowserRouter([
         path: "register",
         element: <Register />,
       },
-      {
-        path: "compress",
-        element: <Compress />,
-      },
-      {
-        path: "convert",
-        element: <Convert />,
-      },
-      {
-        path: "history",
-        element: <History/>
-      }
     ],
   },
 ]);

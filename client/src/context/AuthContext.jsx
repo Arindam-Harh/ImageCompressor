@@ -13,6 +13,7 @@ export const AuthProvider = ({ children }) => {
       const response = await fetch(`${url}/profile`, {
         method: "GET",
         credentials: "include",
+        cache: "no-store",
       });
 
       if (response.ok) {
