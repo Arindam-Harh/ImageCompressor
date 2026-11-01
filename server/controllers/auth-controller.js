@@ -18,7 +18,8 @@ export const handleUserRegister = async (req, res, next) => {
     const token = await userCreated.generateToken();
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false,
+      secure: true,
+      sameSite: "none",
       maxAge: 30 * 24 * 60 * 60 * 1000,
     });
     return res.status(201).json({
@@ -55,7 +56,8 @@ export const handleUserLogin = async (req, res, next) => {
     const token = await emailExists.generateToken();
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false,
+      secure: true,
+      sameSite: "none",
       maxAge: 30 * 24 * 60 * 60 * 1000,
     });
     return res.status(200).json({
