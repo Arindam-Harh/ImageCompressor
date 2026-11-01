@@ -1,8 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
+import logo from "./img.png";
 import "./Header.css";
-
-const SITE_NAME = "Logo";
 
 const links = [
   { label: "Home", to: "/", end: true },
@@ -15,9 +14,8 @@ export const Header = () => {
   return (
     <header className="nav">
       <NavLink to="/" end className="nav-logo">
-        {SITE_NAME}
+        <img src={logo} alt="ImageZen Logo" />
       </NavLink>
-
       <div className="nav-right">
         <nav className="nav-links" aria-label="Primary">
           {links.map(({ label, to, end }) => (
