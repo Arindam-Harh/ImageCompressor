@@ -1,12 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   FaCompressAlt,
   FaDownload,
   FaRedoAlt,
   FaExclamationTriangle,
 } from "react-icons/fa";
+import { toast } from "react-toastify";
 import { Dropzone } from "../components/Dropzone";
-import { baseName, encodeImage, formatBytes } from "../utils/imageTools";
+import {
+  baseName,
+  encodeImage,
+  formatBytes,
+  typeLabel,
+} from "../utils/imageTools";
+import { saveToHistory } from "../utils/historyDB.js";
 import "./ImageTool.css";
 
 export const Compress = () => {
@@ -16,12 +23,13 @@ export const Compress = () => {
   const [result, setResult] = useState(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const savedRef = useRef(null);
 
   // JPEG stays JPEG. Everything else becomes WebP, because PNG can't be lossy.
   const outType = file?.type === "image/jpeg" ? "image/jpeg" : "image/webp";
   const outExt = outType === "image/jpeg" ? "jpg" : "webp";
+  const downloadName = file ? `${baseName(file.name)}-compressed.${outExt}` : "";
 
-  // Preview of the original
   useEffect(() => {
     if (!file) return;
     const url = URL.createObjectURL(file);
@@ -29,7 +37,6 @@ export const Compress = () => {
     return () => URL.revokeObjectURL(url);
   }, [file]);
 
-  // Re-compress whenever the file or quality changes
   useEffect(() => {
     if (!file) return;
 
@@ -68,9 +75,34 @@ export const Compress = () => {
     setPreviewUrl("");
     setResult(null);
     setError("");
+    savedRef.current = null;
   };
 
-  const saved = result ? Math.round((1 - result.blob.size / file.size) * 100) : 0;
+  const handleDownload = async () => {
+    toast.success("Download started", { toastId: "download" });
+
+    // Save one history entry per result, even if the button is clicked twice
+    if (!result || savedRef.current === result.url) return;
+    savedRef.current = result.url;
+
+    try {
+      await saveToHistory({
+        tool: "compress",
+        fileName: downloadName,
+        originalName: file.name,
+        fromLabel: typeLabel(file.type),
+        toLabel: typeLabel(outType),
+        originalSize: file.size,
+        blob: result.blob,
+      });
+    } catch (err) {
+      console.error("Could not save to history:", err);
+    }
+  };
+
+  const saved = result
+    ? Math.round((1 - result.blob.size / file.size) * 100)
+    : 0;
 
   return (
     <div className="tool-page">
@@ -164,7 +196,8 @@ export const Compress = () => {
                 <a
                   className="tool-btn"
                   href={result.url}
-                  download={`${baseName(file.name)}-compressed.${outExt}`}
+                  download={downloadName}
+                  onClick={handleDownload}
                 >
                   <FaDownload aria-hidden="true" /> Download
                 </a>

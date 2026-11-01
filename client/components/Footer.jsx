@@ -1,14 +1,26 @@
-import { FaInstagram, FaFacebookF, FaGithub } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
+import { NavLink } from "react-router-dom";
 import "./Footer.css";
+import {
+  FaHome,
+  FaCompressAlt,
+  FaExchangeAlt,
+  FaHistory,
+  FaUserCircle,
+} from "react-icons/fa";
 
-const socials = [
-  { label: "Instagram", href: "https://instagram.com", icon: <FaInstagram /> },
-  { label: "Facebook", href: "https://facebook.com", icon: <FaFacebookF /> },
-  { label: "Twitter", href: "https://x.com", icon: <FaXTwitter /> },
-  { label: "GitHub", href: "https://github.com", icon: <FaGithub /> },
+const tabs = [
+  { label: "Home", to: "/", icon: FaHome, end: true },
+  { label: "Compress", to: "/compress", icon: FaCompressAlt },
+  { label: "Convert", to: "/convert", icon: FaExchangeAlt },
+  { label: "History", to: "/history", icon: FaHistory },
 ];
 
+const links = [
+  { label: "Home", to: "/", end: true },
+  { label: "Compress", to: "/compress" },
+  { label: "Convert", to: "/convert" },
+  { label: "History", to: "/history" },
+];
 export const Footer = () => {
   return (
     <footer className="footer">
@@ -16,19 +28,14 @@ export const Footer = () => {
         &copy; {new Date().getFullYear()} All rights reserved
       </p>
 
-      <div className="socials">
-        {socials.map(({ label, href, icon }) => (
-          <a
-            key={label}
-            href={href}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={label}
-          >
-            {icon}
-          </a>
+      <nav className="footer-tabs" aria-label="Main">
+        {tabs.map(({ label, to, icon: Icon, end }) => (
+          <NavLink key={to} to={to} end={end} className="footer-tab">
+            <Icon aria-hidden="true" />
+            <span>{label}</span>
+          </NavLink>
         ))}
-      </div>
+      </nav>
     </footer>
   );
 };

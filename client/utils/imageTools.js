@@ -55,4 +55,12 @@ export const encodeImage = async (
   return { blob, width, height };
 };
 
+export const typeLabel = (type) =>
+  type === "image/jpeg"
+    ? "JPG"
+    : type === "image/png"
+      ? "PNG"
+      : type === "image/webp"
+        ? "WebP"
+        : type.replace("image/", "").toUpperCase();
 export const baseName = (name) => name.replace(/\.[^/.]+$/, "");

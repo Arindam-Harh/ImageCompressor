@@ -6,6 +6,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1rem;
   padding: 0.9rem 1.5rem;
 
   background: #00152b;
@@ -16,15 +17,16 @@
 .nav a {
   text-decoration: none;
   transition:
-    color 0.25s ease,
-    border-color 0.25s ease,
-    background-color 0.25s ease;
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease;
 }
 
 .nav-logo {
   font-size: 1.4rem;
   font-weight: 700;
   letter-spacing: 1px;
+  white-space: nowrap;
   color: #cff0fe;
 }
 
@@ -32,10 +34,34 @@
   color: #7bbde8;
 }
 
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.nav-link {
+  padding: 0.45rem 0.85rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #8fb3c4;
+  border-radius: 8px;
+}
+
+.nav-link:hover {
+  color: #cff0fe;
+}
+
+.nav-link.active {
+  color: #7bbde8;
+  background: rgba(123, 189, 232, 0.1);
+}
+
 .nav-account {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  margin-left: 0.6rem;
   padding: 0.45rem 0.95rem;
 
   font-size: 0.95rem;
@@ -62,22 +88,205 @@
   outline-offset: 3px;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .nav a {
-    transition-duration: 0.01ms;
-  }
-}
-
-@media (max-width: 480px) {
+/* Mobile: the footer tab bar handles navigation */
+@media (max-width: 640px) {
   .nav {
-    padding: 0.7rem 1rem;
+    justify-content: center;
+    padding: 0.8rem 1rem;
+  }
+
+  .nav-links {
+    display: none;
   }
 
   .nav-logo {
     font-size: 1.2rem;
   }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav a {
+    transition: none;
+  }
+}
+@media (max-width: 640px) {
+  .nav {
+    padding: 0.8rem 1rem;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .nav-account {
+    margin-left: 0;
+    padding: 0.45rem;
+  }
 
   .nav-account span {
     display: none;
+  }
+
+  .nav-logo {
+    font-size: 1.2rem;
+  }
+}
+@media (max-width: 640px) {
+  .nav {
+    justify-content: space-between;
+    padding: 0.8rem 1rem;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .nav-account {
+    margin-left: 0;
+    padding: 0.45rem 0.8rem;
+  }
+
+  .nav-logo {
+    font-size: 1.2rem;
+  }
+}
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 1.5rem;
+
+  background: #00152b;
+  border-bottom: 2px solid #07969f;
+  box-shadow: 0 6px 20px rgba(0, 10, 25, 0.45);
+}
+
+.nav a {
+  text-decoration: none;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.nav-logo {
+  flex-shrink: 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  color: #cff0fe;
+}
+
+.nav-logo:hover {
+  color: #7bbde8;
+}
+
+/* Right side: links + account in ONE row */
+.nav-right {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 0.3rem;
+  margin-left: auto;
+}
+
+/* Reset anything a global "nav" rule might apply */
+.nav .nav-links {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 0.3rem;
+  width: auto;
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: 0;
+  box-shadow: none;
+  position: static;
+}
+
+.nav-link {
+  padding: 0.45rem 0.85rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  white-space: nowrap;
+  color: #8fb3c4;
+  border-radius: 8px;
+}
+
+.nav-link:hover {
+  color: #cff0fe;
+}
+
+.nav-link.active {
+  color: #7bbde8;
+  background: rgba(123, 189, 232, 0.1);
+}
+
+.nav-account {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: 0.6rem;
+  padding: 0.45rem 0.95rem;
+
+  font-size: 0.95rem;
+  font-weight: 600;
+  white-space: nowrap;
+  color: #cff0fe;
+
+  border: 1.5px solid rgba(110, 162, 179, 0.55);
+  border-radius: 999px;
+}
+
+.nav-account svg {
+  font-size: 1.15rem;
+}
+
+.nav-account:hover,
+.nav-account.active {
+  color: #7bbde8;
+  border-color: #7bbde8;
+  background: rgba(123, 189, 232, 0.1);
+}
+
+.nav a:focus-visible {
+  outline: 2px solid #7bbde8;
+  outline-offset: 3px;
+}
+
+/* Mobile: logo left, Account right, page links live in the footer */
+@media (max-width: 640px) {
+  .nav {
+    padding: 0.8rem 1rem;
+  }
+
+  .nav .nav-links {
+    display: none;
+  }
+
+  .nav-account {
+    margin-left: 0;
+    padding: 0.45rem 0.8rem;
+  }
+
+  .nav-logo {
+    font-size: 1.2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav a {
+    transition: none;
   }
 }

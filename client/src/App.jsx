@@ -9,6 +9,7 @@ import { Account } from "../pages/Account";
 import { ProtectedRoute } from "../components/ProtectedRoute";
 import { Compress } from "../pages/Compress";
 import { Convert } from "../pages/Convert";
+import { History } from "../pages/History";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
         path: "convert",
         element: <Convert />,
       },
+      {
+        path: "history",
+        element: <History/>
+      }
     ],
   },
 ]);

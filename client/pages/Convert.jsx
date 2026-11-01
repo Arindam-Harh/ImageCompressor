@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   FaExchangeAlt,
   FaDownload,
   FaRedoAlt,
   FaExclamationTriangle,
 } from "react-icons/fa";
+import { toast } from "react-toastify";
 import { Dropzone } from "../components/Dropzone";
 import { baseName, encodeImage, formatBytes } from "../utils/imageTools";
+import { saveToHistory } from "../utils/historyDB.js";
 import "./ImageTool.css";
 
 const FORMATS = [
@@ -32,8 +34,10 @@ export const Convert = () => {
   const [result, setResult] = useState(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const savedRef = useRef(null);
 
   const format = FORMATS.find((f) => f.id === formatId);
+  const downloadName = file ? `${baseName(file.name)}.${format.id}` : "";
 
   useEffect(() => {
     if (!file) return;
@@ -82,6 +86,31 @@ export const Convert = () => {
     setPreviewUrl("");
     setResult(null);
     setError("");
+    savedRef.current = null;
+  };
+
+  const handleDownload = async () => {
+    toast.success(`Download started (${format.label})`, {
+      toastId: "download",
+    });
+
+    // Save one history entry per result, even if the button is clicked twice
+    if (!result || savedRef.current === result.url) return;
+    savedRef.current = result.url;
+
+    try {
+      await saveToHistory({
+        tool: "convert",
+        fileName: downloadName,
+        originalName: file.name,
+        fromLabel: nameOf(file.type),
+        toLabel: format.label,
+        originalSize: file.size,
+        blob: result.blob,
+      });
+    } catch (err) {
+      console.error("Could not save to history:", err);
+    }
   };
 
   return (
@@ -189,7 +218,8 @@ export const Convert = () => {
                 <a
                   className="tool-btn"
                   href={result.url}
-                  download={`${baseName(file.name)}.${format.id}`}
+                  download={downloadName}
+                  onClick={handleDownload}
                 >
                   <FaDownload aria-hidden="true" /> Download {format.label}
                 </a>
