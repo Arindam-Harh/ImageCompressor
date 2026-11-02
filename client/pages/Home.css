@@ -1,20 +1,10 @@
 .home-page {
-  --bg: #08294a;
-  --surface: #0c3459;
-  --border: #1f4d78;
-  --text: #e6f1f8;
-  --muted: #9bb6c9;
-  --accent: #137f96;
-  --accent-hover: #0f6c80;
-  --accent-text: #5fc4d8;
-
   flex: 1;
   display: flex;
   justify-content: center;
   padding: 72px 20px 64px;
   background: var(--bg);
   color: var(--text);
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-size: 16px;
   line-height: 1.5;
 }
@@ -36,7 +26,7 @@
   font-size: clamp(28px, 5vw, 40px);
   font-weight: 600;
   line-height: 1.2;
-  color: #fff;
+  color: var(--heading);
 }
 
 .home-hero p {
@@ -63,7 +53,7 @@
   font-size: 15px;
   font-weight: 600;
   text-decoration: none;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   transition: background-color 0.15s, border-color 0.15s;
 }
 
@@ -104,7 +94,7 @@
   text-decoration: none;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   transition: border-color 0.15s;
 }
 
@@ -121,7 +111,7 @@
   margin-top: 16px;
   font-size: 18px;
   font-weight: 600;
-  color: #fff;
+  color: var(--heading);
 }
 
 .home-tool p {

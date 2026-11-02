@@ -1,213 +1,383 @@
 .account-page {
   flex: 1;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 2rem 1.5rem;
-
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  letter-spacing: 0.3px;
-  -webkit-font-smoothing: antialiased;
-
-  background:
-    radial-gradient(circle at 15% 10%, rgba(7, 150, 159, 0.25), transparent 45%),
-    radial-gradient(circle at 90% 90%, rgba(123, 189, 232, 0.16), transparent 45%),
-    linear-gradient(180deg, #06223f, #0a3560);
-}
-
-.account-card {
-  position: relative;
   width: 100%;
-  max-width: 460px;
-  overflow: hidden;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 32px 20px 20px;
 
-  background: #0b2a4a;
-  border: 1px solid rgba(207, 240, 254, 0.14);
-  border-radius: 18px;
-  box-shadow:
-    0 24px 60px rgba(0, 10, 25, 0.5),
-    inset 0 1px 0 rgba(207, 240, 254, 0.08);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--bg);
 }
 
-/* Banner */
-.account-banner {
-  height: 96px;
-  background:
-    radial-gradient(circle at 80% 20%, rgba(143, 224, 240, 0.35), transparent 50%),
-    linear-gradient(120deg, #0a4174, #0b8a99);
+.account-page *,
+.account-page *::before,
+.account-page *::after,
+.logout-overlay * {
+  box-sizing: border-box;
 }
 
-/* Avatar overlaps the banner */
-.account-avatar {
-  position: absolute;
-  top: 96px;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.account-wrap {
+  width: 100%;
+  max-width: 500px;
+}
 
-  display: flex;
+/* ---------- Back button ---------- */
+.account-back-btn {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  width: 5rem;
-  height: 5rem;
+  gap: 10px;
+  height: 40px;
+  padding: 0 16px;
+  margin-bottom: 20px;
 
-  font-size: 2rem;
-  font-weight: 700;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.account-back-btn:hover {
+  color: var(--accent-text);
+  border-color: var(--accent-text);
+}
+
+/* ---------- Card ---------- */
+.account-card {
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.account-banner {
+  height: 110px;
+  background: linear-gradient(120deg, var(--surface-2), var(--accent));
+}
+
+.account-avatar {
+  display: grid;
+  place-items: center;
+  width: 84px;
+  height: 84px;
+  margin: -42px auto 0;
+
+  font-size: 34px;
+  font-weight: 600;
   color: #fff;
 
-  background: linear-gradient(135deg, #0a5f94, #0b8a99);
-  border: 4px solid #0b2a4a;
+  background: var(--accent);
+  border: 5px solid var(--surface);
   border-radius: 50%;
-  box-shadow: 0 10px 24px rgba(0, 10, 25, 0.45);
 }
 
 .account-body {
-  padding: 3.4rem 2rem 2rem;
+  padding: 16px 28px 28px;
   text-align: center;
 }
 
 .account-body h1 {
-  font-size: 1.6rem;
+  font-size: 22px;
   font-weight: 600;
-  color: #cff0fe;
+  line-height: 1.25;
+  color: var(--heading);
   word-break: break-word;
 }
 
 .account-sub {
-  margin-top: 0.6rem;
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: #8fb3c4;
+  max-width: 380px;
+  margin: 8px auto 24px;
+  font-size: 14px;
+  color: var(--muted);
 }
 
-/* Details */
+/* ---------- Details ---------- */
 .account-details {
-  margin-top: 1.6rem;
+  overflow: hidden;
   text-align: left;
-
-  background: rgba(0, 21, 43, 0.45);
-  border: 1px solid rgba(207, 240, 254, 0.1);
-  border-radius: 12px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
 }
 
 .account-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
-  padding: 0.85rem 1.1rem;
+  gap: 14px;
+  padding: 12px 14px;
 }
 
 .account-row + .account-row {
-  border-top: 1px solid rgba(207, 240, 254, 0.08);
+  border-top: 1px solid var(--divider);
 }
 
 .account-key {
   flex-shrink: 0;
-  font-size: 0.82rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  color: #6ea2b3;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.account-icon {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  font-size: 13px;
+  font-style: normal;
+  color: var(--accent-text);
+  background: rgba(111, 211, 228, 0.1);
+  border-radius: var(--radius-sm);
 }
 
 .account-value {
   min-width: 0;
-  font-size: 0.95rem;
-  color: #cff0fe;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--heading);
   text-align: right;
-  word-break: break-all;
+  word-break: break-word;
 }
 
 .account-badge {
-  padding: 0.2rem 0.7rem;
-
-  font-size: 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 3px 12px;
+  font-size: 13px;
   font-weight: 600;
-  color: #8fe0f0;
-
-  background: rgba(92, 195, 217, 0.12);
-  border: 1px solid rgba(92, 195, 217, 0.4);
+  color: var(--ok);
+  border: 1px solid var(--ok);
   border-radius: 999px;
 }
 
-/* Buttons */
-.account-actions {
-  display: flex;
-  gap: 0.8rem;
-  margin-top: 1.8rem;
+.account-badge::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  background: var(--ok);
+  border-radius: 50%;
 }
 
-.account-actions button {
-  flex: 1;
-  padding: 12px 20px;
-
-  font-family: inherit;
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: 0.6px;
-
-  border-radius: 10px;
-  cursor: pointer;
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease,
-    border-color 0.25s ease,
-    background-color 0.25s ease,
-    color 0.25s ease;
-}
-
-.account-back-btn {
-  color: #cff0fe;
-  background: transparent;
-  border: 1.5px solid rgba(110, 162, 179, 0.5);
-}
-
-.account-back-btn:hover {
-  border-color: #7bbde8;
-  background: rgba(123, 189, 232, 0.1);
-  transform: translateY(-2px);
-}
-
+/* ---------- Logout ---------- */
 .account-logout-btn {
-  color: #fff;
-  background: linear-gradient(90deg, #0a5f94, #0b8a99);
-  border: 1px solid #5cc3d9;
-  box-shadow:
-    0 8px 20px rgba(11, 138, 153, 0.35),
-    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  height: 44px;
+  margin-top: 22px;
+
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--danger);
+  cursor: pointer;
+
+  background: transparent;
+  border: 1px solid var(--danger-bg);
+  border-radius: var(--radius-sm);
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
 }
 
 .account-logout-btn:hover {
-  background: linear-gradient(90deg, #0b8a99, #0a5f94);
-  border-color: #8fe0f0;
-  transform: translateY(-2px);
+  color: #fff;
+  background: var(--danger-bg);
+  border-color: var(--danger-bg);
 }
 
-.account-actions button:active {
-  transform: translateY(0);
+/* ---------- Footer line ---------- */
+.account-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 32px;
+  font-size: 13px;
+  color: var(--muted);
 }
 
-.account-actions button:focus-visible {
-  outline: 2px solid #8fe0f0;
-  outline-offset: 3px;
+.account-footer span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .account-actions button {
-    transition-duration: 0.01ms;
-  }
+.account-heart {
+  font-size: 12px;
+  color: var(--danger);
 }
 
+/* ---------- Logout popup ---------- */
+.logout-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0, 12, 26, 0.7);
+}
+
+.logout-modal {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  padding: 32px 24px 24px;
+  text-align: center;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.logout-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  font-size: 14px;
+  color: var(--muted);
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-sm);
+  transition: color 0.15s, background-color 0.15s;
+}
+
+.logout-close:hover {
+  color: var(--heading);
+  background: var(--surface-2);
+}
+
+.logout-icon {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 14px;
+  font-size: 22px;
+  color: var(--danger);
+  background: var(--surface-2);
+  border: 1px solid var(--danger-bg);
+  border-radius: 50%;
+}
+
+.logout-modal h2 {
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--heading);
+}
+
+.logout-modal p {
+  margin: 6px 0 22px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.logout-modal-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.logout-modal-actions button {
+  flex: 1;
+  height: 42px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: background-color 0.15s, border-color 0.15s;
+}
+
+.logout-cancel {
+  color: var(--text);
+  background: transparent;
+  border: 1px solid var(--border);
+}
+
+.logout-cancel:hover:not(:disabled) {
+  border-color: var(--accent-text);
+}
+
+.logout-confirm {
+  color: #fff;
+  background: var(--danger-bg);
+  border: 1px solid var(--danger-bg);
+}
+
+.logout-confirm:hover:not(:disabled) {
+  background: var(--danger-hover);
+  border-color: var(--danger-hover);
+}
+
+.logout-modal-actions button:disabled,
+.logout-close:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ---------- Focus ---------- */
+.account-page button:focus-visible,
+.logout-overlay button:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 2px;
+}
+
+/* ---------- Mobile ---------- */
 @media (max-width: 480px) {
+  .account-page {
+    padding: 20px 14px 16px;
+  }
+
+  .account-banner {
+    height: 92px;
+  }
+
+  .account-avatar {
+    width: 72px;
+    height: 72px;
+    margin-top: -36px;
+    font-size: 28px;
+  }
+
   .account-body {
-    padding: 3.2rem 1.2rem 1.5rem;
+    padding: 14px 16px 22px;
   }
 
   .account-body h1 {
-    font-size: 1.4rem;
+    font-size: 20px;
   }
 
-  .account-actions {
-    flex-direction: column;
+  .logout-modal {
+    padding: 28px 18px 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .account-page *,
+  .logout-overlay * {
+    transition: none !important;
   }
 }
