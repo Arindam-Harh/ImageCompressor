@@ -1,12 +1,23 @@
+/* Fit the page to one screen on Compress and Convert only.
+   :has() limits this to pages that contain .tool-page. */
+.app-shell:has(.tool-page) {
+  height: 100vh;
+  height: 100dvh;
+}
+
+.app-shell:has(.tool-page) .app-main {
+  min-height: 0;
+  overflow: hidden;
+}
+
 .tool-page {
   flex: 1;
+  min-height: 0;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 48px 20px 64px;
+  padding: 16px;
+  overflow-y: auto; /* safety net on very small screens */
   background: var(--bg);
   color: var(--text);
-  font-size: 16px;
   line-height: 1.5;
 }
 
@@ -16,10 +27,13 @@
   box-sizing: border-box;
 }
 
+/* margin: auto centers the card in both directions,
+   and still lets you scroll to the top if it ever overflows */
 .tool-card {
   width: 100%;
-  max-width: 540px;
-  padding: 32px;
+  max-width: 520px;
+  margin: auto;
+  padding: 24px;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
@@ -27,27 +41,27 @@
 
 /* ---------- Header ---------- */
 .tool-header {
-  margin-bottom: 24px;
+  margin-bottom: 18px;
 }
 
 .tool-header-icon {
   display: block;
-  margin-bottom: 12px;
-  font-size: 22px;
+  margin-bottom: 8px;
+  font-size: 20px;
   line-height: 1;
   color: var(--accent-text);
 }
 
 .tool-header h1 {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 600;
   line-height: 1.25;
   color: var(--heading);
 }
 
 .tool-header p {
-  margin-top: 4px;
-  font-size: 15px;
+  margin-top: 2px;
+  font-size: 14px;
   color: var(--muted);
 }
 
@@ -63,7 +77,7 @@
   background: var(--surface-2);
   border: 1.5px dashed var(--border);
   border-radius: var(--radius);
-  transition: border-color 0.15s, background-color 0.15s;
+  transition: border-color 0.15s;
 }
 
 .tool-drop:hover,
@@ -72,8 +86,8 @@
 }
 
 .tool-drop-icon {
-  margin-bottom: 8px;
-  font-size: 32px;
+  margin-bottom: 6px;
+  font-size: 30px;
   color: var(--accent-text);
 }
 
@@ -92,8 +106,8 @@
 .tool-preview {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 12px;
+  gap: 12px;
+  padding: 10px;
   background: var(--surface-2);
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -101,8 +115,8 @@
 
 .tool-preview img {
   flex-shrink: 0;
-  width: 72px;
-  height: 72px;
+  width: 56px;
+  height: 56px;
   object-fit: cover;
   border-radius: var(--radius-sm);
   background: var(--bg);
@@ -131,14 +145,14 @@
 
 /* ---------- Controls ---------- */
 .tool-control {
-  margin-top: 24px;
+  margin-top: 16px;
 }
 
 .tool-control-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .tool-control-top label,
@@ -156,7 +170,7 @@
 }
 
 .tool-hint {
-  margin-top: 10px;
+  margin-top: 8px;
   font-size: 13px;
   color: var(--muted);
 }
@@ -167,12 +181,13 @@
 
 /* Slider */
 .tool-control input[type="range"] {
+  display: block;
   width: 100%;
-  height: 4px;
+  height: 6px;
   cursor: pointer;
   appearance: none;
   -webkit-appearance: none;
-  border-radius: 2px;
+  border-radius: 3px;
   background: linear-gradient(
     90deg,
     var(--accent-text) var(--fill, 50%),
@@ -181,12 +196,12 @@
 }
 
 .tool-control input[type="range"]::-webkit-slider-thumb {
-  width: 18px;
-  height: 18px;
+  width: 22px;
+  height: 22px;
   appearance: none;
   -webkit-appearance: none;
   background: #fff;
-  border: 0;
+  border: 2px solid var(--accent);
   border-radius: 50%;
 }
 
@@ -194,7 +209,7 @@
   width: 18px;
   height: 18px;
   background: #fff;
-  border: 0;
+  border: 2px solid var(--accent);
   border-radius: 50%;
 }
 
@@ -206,9 +221,9 @@
 }
 
 .tool-format {
-  height: 40px;
+  height: 44px;
   font: inherit;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--text);
   cursor: pointer;
@@ -232,14 +247,14 @@
 .tool-stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  margin-top: 24px;
+  margin-top: 16px;
   background: var(--surface-2);
   border: 1px solid var(--border);
   border-radius: var(--radius);
 }
 
 .tool-stats > div {
-  padding: 14px 8px;
+  padding: 10px 6px;
   text-align: center;
 }
 
@@ -250,12 +265,12 @@
 .tool-stats span {
   display: block;
   margin-bottom: 2px;
-  font-size: 13px;
+  font-size: 12px;
   color: var(--muted);
 }
 
 .tool-stats strong {
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--heading);
 }
@@ -273,7 +288,7 @@
   display: flex;
   align-items: flex-start;
   gap: 8px;
-  margin-top: 16px;
+  margin-top: 12px;
   padding: 10px 12px;
   font-size: 14px;
   color: var(--danger);
@@ -286,11 +301,11 @@
   margin-top: 3px;
 }
 
-/* ---------- Buttons ---------- */
+/* ---------- Buttons (side by side, even on phones) ---------- */
 .tool-actions {
   display: flex;
   gap: 10px;
-  margin-top: 28px;
+  margin-top: 20px;
 }
 
 .tool-btn,
@@ -300,12 +315,13 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  height: 44px;
-  padding: 0 16px;
+  height: 48px;
+  padding: 0 14px;
   font: inherit;
   font-size: 15px;
   font-weight: 600;
   text-decoration: none;
+  white-space: nowrap;
   cursor: pointer;
   border-radius: var(--radius-sm);
   transition: background-color 0.15s, border-color 0.15s;
@@ -347,22 +363,92 @@
   outline-offset: 2px;
 }
 
-/* ---------- Mobile ---------- */
+/* ---------- Phones ---------- */
 @media (max-width: 480px) {
   .tool-page {
-    padding: 24px 14px 40px;
+    padding: 12px;
   }
 
   .tool-card {
-    padding: 22px 18px;
+    padding: 18px 16px;
+  }
+
+  .tool-header {
+    margin-bottom: 14px;
   }
 
   .tool-header h1 {
-    font-size: 21px;
+    font-size: 20px;
+  }
+
+  .tool-control {
+    margin-top: 14px;
+  }
+
+  .tool-formats {
+    gap: 8px;
+  }
+
+  .tool-format {
+    height: 46px;
+  }
+
+  .tool-control input[type="range"]::-webkit-slider-thumb {
+    width: 26px;
+    height: 26px;
+  }
+
+  .tool-control input[type="range"]::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
   }
 
   .tool-actions {
-    flex-direction: column-reverse;
+    margin-top: 16px;
+  }
+
+  .tool-btn,
+  .tool-btn-ghost {
+    height: 50px;
+  }
+}
+
+/* ---------- Short screens: drop the extras instead of scrolling ---------- */
+@media (max-height: 720px) {
+  .tool-header p,
+  .tool-hint {
+    display: none;
+  }
+
+  .tool-header {
+    margin-bottom: 12px;
+  }
+
+  .tool-preview img {
+    width: 44px;
+    height: 44px;
+  }
+
+  .tool-control {
+    margin-top: 12px;
+  }
+
+  .tool-stats {
+    margin-top: 12px;
+  }
+
+  .tool-actions {
+    margin-top: 14px;
+  }
+}
+
+@media (max-height: 600px) {
+  .tool-header-icon {
+    display: none;
+  }
+
+  .tool-card {
+    padding: 14px;
   }
 }
 

@@ -1,273 +1,226 @@
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-
-:root {
-  --dark-blue: #001d39;
-  --bit-dark-blue: #0a4174;
-  --sky-blue: #07969f;
-  --pale-blue: #6ea2b3;
-  --light-blue: #7bbde8;
-  --white-blue: #cff0fe;
-
-  --card: #0b2a4a;
-  --border: rgba(110, 162, 179, 0.5);
-  --muted: #8fb3c4;
-  --height: 3.3rem;
-}
-
-html {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  letter-spacing: 0.3px;
-  -webkit-font-smoothing: antialiased;
-}
-
 .main {
-  min-height: 100vh;
-  min-height: 100dvh;
-  display: flex;
+  --field-h: 52px;
+
   flex: 1;
+  display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.5rem;
-  background: linear-gradient(
-    var(--dark-blue),
-    var(--bit-dark-blue),
-    var(--sky-blue)
-  );
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 24px 16px;
+  background: var(--bg);
+  color: var(--text);
 }
 
-/* Card (solid, so the label notch blends in perfectly) */
+/* ---------- Card ---------- */
+.login-form,
 .register-form {
   width: 100%;
   max-width: 420px;
-  padding: 2.2rem 2.2rem 1.8rem;
-
-  background: var(--card);
-  border: 1px solid rgba(207, 240, 254, 0.14);
-  border-radius: 16px;
-  box-shadow:
-    0 24px 60px rgba(0, 10, 25, 0.45),
-    inset 0 1px 0 rgba(207, 240, 254, 0.08);
+  padding: 40px 36px 32px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--accent);
+  border-radius: var(--radius-lg);
 }
 
+/* ---------- Heading ---------- */
+.login-form h1,
 .register-form h1 {
-  margin-bottom: 1.6rem;
+  margin-bottom: 32px;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.6px;
   text-align: center;
-  font-size: 2.2rem;
-  font-weight: 600;
-  color: var(--white-blue);
+  color: var(--heading);
 }
 
-/* Input + notch label */
+.login-form h1::after,
+.register-form h1::after {
+  content: "";
+  display: block;
+  width: 36px;
+  height: 3px;
+  margin: 14px auto 0;
+  background: var(--accent-text);
+  border-radius: 2px;
+}
+
+/* ---------- Fields ---------- */
 .input-group {
   position: relative;
-  height: var(--height);
-  margin: 1.5rem 0;
+  height: var(--field-h);
+  margin-bottom: 20px;
 }
 
 .input-group input {
   width: 100%;
   height: 100%;
-  padding: 0 1rem;
-
-  font-family: inherit;
-  font-size: 1rem;
-  color: var(--white-blue);
-  caret-color: var(--light-blue);
+  padding: 0 14px;
+  font-size: 16px; /* stops iOS zooming on focus */
+  color: var(--text);
+  caret-color: var(--accent-text);
   background: transparent;
-  color-scheme: dark;
-
-  border: 1.5px solid var(--border);
-  border-radius: 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
   outline: none;
-
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
 }
 
 .input-group input:hover {
-  border-color: var(--pale-blue);
+  border-color: var(--muted);
 }
 
 .input-group input:focus {
-  border-color: var(--light-blue);
-  box-shadow: 0 0 0 3px rgba(123, 189, 232, 0.18);
+  border-color: var(--accent-text);
+  box-shadow: 0 0 0 3px var(--tint);
 }
 
+/* Label sits in the field, then floats onto the border */
 .input-group label {
   position: absolute;
-  left: 0.8rem;
+  left: 10px;
   top: 50%;
   padding: 0 6px;
-
-  font-size: 1rem;
+  font-size: 15px;
   line-height: 1;
   color: var(--muted);
-  background: var(--card);
+  background: var(--surface); /* must match the card */
   pointer-events: none;
-
   transform: translateY(-50%);
   transform-origin: left center;
-  transition: transform 0.2s ease, color 0.2s ease;
+  transition: transform 0.15s ease, color 0.15s ease;
 }
 
-/* Label slides up onto the border */
 .input-group input:focus ~ label,
 .input-group input:not(:placeholder-shown) ~ label,
 .input-group input:-webkit-autofill ~ label {
-  transform: translateY(calc(-50% - var(--height) / 2)) scale(0.82);
-  color: var(--pale-blue);
+  transform: translateY(calc(-50% - var(--field-h) / 2)) scale(0.85);
 }
 
 .input-group input:focus ~ label {
-  color: var(--light-blue);
+  color: var(--accent-text);
 }
 
-/* Autofill stays dark */
+/* Keep autofill from turning the field white */
 .input-group input:-webkit-autofill,
 .input-group input:-webkit-autofill:hover,
 .input-group input:-webkit-autofill:focus {
-  -webkit-text-fill-color: var(--white-blue);
-  -webkit-box-shadow: 0 0 0 1000px var(--card) inset;
-  box-shadow: 0 0 0 1000px var(--card) inset;
+  -webkit-text-fill-color: var(--text);
+  -webkit-box-shadow: 0 0 0 1000px var(--surface) inset;
+  box-shadow: 0 0 0 1000px var(--surface) inset;
   transition: background-color 9999s ease-in-out 0s;
 }
 
-/* Hide Edge's own password icon */
 .input-group input::-ms-reveal,
 .input-group input::-ms-clear {
   display: none;
 }
 
-/* Password eye */
+/* ---------- Password toggle ---------- */
 .input-group:has(.password-toggle) input {
-  padding-right: 3rem;
+  padding-right: 48px;
 }
 
 .password-toggle {
   position: absolute;
   top: 50%;
-  right: 10px;
-  transform: translateY(-50%);
-
-  display: flex;
-  padding: 6px;
-  font-size: 1.1rem;
-
-  color: var(--pale-blue);
-  background: transparent;
-  border: none;
-  border-radius: 6px;
+  right: 6px;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  font-size: 16px;
+  color: var(--muted);
   cursor: pointer;
-  transition: color 0.2s ease;
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-sm);
+  transform: translateY(-50%);
+  transition: color 0.15s;
 }
 
 .password-toggle:hover {
-  color: var(--white-blue);
+  color: var(--accent-text);
 }
 
-.password-toggle:focus-visible,
-.main-btn:focus-visible {
-  outline: 2px solid var(--light-blue);
-  outline-offset: 3px;
-}
-
-/* Button */
+/* ---------- Submit button ---------- */
 .main-btn {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-
   width: 100%;
-  margin-top: 0.6rem;
-  padding: 13px 25px;
-
-  font-family: inherit;
-  font-size: 1.05rem;
+  height: 48px;
+  margin-top: 8px;
+  font-size: 16px;
   font-weight: 600;
-  letter-spacing: 0.8px;
+  letter-spacing: 0.2px;
   color: #fff;
-
-  background: linear-gradient(90deg, #0a5f94, #0b8a99);
-  border: 1px solid #5cc3d9;
-  border-radius: 10px;
-  box-shadow:
-    0 8px 20px rgba(11, 138, 153, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.18);
-
   cursor: pointer;
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  transition: background-color 0.15s, border-color 0.15s;
 }
 
-.main-btn::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: linear-gradient(90deg, #0b8a99, #0a5f94);
-  opacity: 0;
-  transition: opacity 0.25s ease;
+.main-btn:hover:not(:disabled) {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
 }
 
-.main-btn:hover {
-  border-color: #8fe0f0;
-  box-shadow:
-    0 12px 26px rgba(92, 195, 217, 0.45),
-    inset 0 1px 0 rgba(255, 255, 255, 0.22);
-  transform: translateY(-2px);
+.main-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
-.main-btn:hover::before {
-  opacity: 1;
-}
-
-.main-btn:active {
-  transform: translateY(0);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  * {
-    transition-duration: 0.01ms !important;
-  }
-}
-
-@media (max-width: 480px) {
-  .main {
-    padding: 1rem;
-  }
-
-  .register-form {
-    padding: 1.7rem 1.3rem 1.4rem;
-  }
-
-  .register-form h1 {
-    font-size: 1.9rem;
-  }
-}
-/* "Login" line */
+/* ---------- Switch line ---------- */
 .switch-text {
-  margin-top: 1.4rem;
+  margin-top: 24px;
+  padding-top: 20px;
+  font-size: 14px;
   text-align: center;
-  font-size: 0.95rem;
   color: var(--muted);
+  border-top: 1px solid var(--divider);
 }
 
 .switch-link {
   font-weight: 600;
-  color: var(--light-blue);
+  color: var(--accent-text);
   text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: color 0.2s ease, border-color 0.2s ease;
 }
 
 .switch-link:hover {
-  color: var(--white-blue);
-  border-bottom-color: var(--white-blue);
+  text-decoration: underline;
 }
 
+/* ---------- Focus ---------- */
+.password-toggle:focus-visible,
+.main-btn:focus-visible,
 .switch-link:focus-visible {
-  outline: 2px solid var(--light-blue);
-  outline-offset: 3px;
+  outline: 2px solid var(--accent-text);
+  outline-offset: 2px;
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 480px) {
+  .main {
+    padding: 24px 14px;
+  }
+
+  .login-form,
+  .register-form {
+    padding: 32px 20px 24px;
+  }
+
+  .login-form h1,
+  .register-form h1 {
+    margin-bottom: 28px;
+    font-size: 26px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .main * {
+    transition: none !important;
+  }
 }

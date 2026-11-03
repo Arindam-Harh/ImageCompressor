@@ -6,9 +6,16 @@ import {
   FaExclamationTriangle,
 } from "react-icons/fa";
 import { toast } from "react-toastify";
+import { useAuth } from "../src/context/AuthContext";
 import { Dropzone } from "../components/Dropzone";
-import { baseName, encodeImage, formatBytes } from "../utils/imageTools";
+import {
+  baseName,
+  encodeImage,
+  formatBytes,
+  typeLabel,
+} from "../utils/imageTools";
 import { saveToHistory } from "../utils/historyDB.js";
+import { getOwner } from "../utils/historyOwner";
 import "./ImageTool.css";
 
 const FORMATS = [
@@ -17,16 +24,9 @@ const FORMATS = [
   { id: "webp", label: "WebP", type: "image/webp", lossy: true },
 ];
 
-const nameOf = (type) =>
-  type === "image/jpeg"
-    ? "JPG"
-    : type === "image/png"
-      ? "PNG"
-      : type === "image/webp"
-        ? "WebP"
-        : type.replace("image/", "").toUpperCase();
-
 export const Convert = () => {
+  const { user } = useAuth();
+
   const [file, setFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState("");
   const [formatId, setFormatId] = useState("webp");
@@ -94,16 +94,17 @@ export const Convert = () => {
       toastId: "download",
     });
 
-    // Save one history entry per result, even if the button is clicked twice
+    // One history entry per result, even if the button is clicked twice
     if (!result || savedRef.current === result.url) return;
     savedRef.current = result.url;
 
     try {
       await saveToHistory({
+        owner: getOwner(user),
         tool: "convert",
         fileName: downloadName,
         originalName: file.name,
-        fromLabel: nameOf(file.type),
+        fromLabel: typeLabel(file.type),
         toLabel: format.label,
         originalSize: file.size,
         blob: result.blob,
@@ -133,7 +134,7 @@ export const Convert = () => {
               <div className="tool-file-meta">
                 <strong title={file.name}>{file.name}</strong>
                 <span>
-                  {nameOf(file.type)} · {formatBytes(file.size)}
+                  {typeLabel(file.type)} · {formatBytes(file.size)}
                 </span>
               </div>
             </div>
@@ -194,7 +195,7 @@ export const Convert = () => {
               <div className="tool-stats" aria-live="polite">
                 <div>
                   <span>From</span>
-                  <strong>{nameOf(file.type)}</strong>
+                  <strong>{typeLabel(file.type)}</strong>
                 </div>
                 <div>
                   <span>To</span>

@@ -6,6 +6,7 @@ import {
   FaExclamationTriangle,
 } from "react-icons/fa";
 import { toast } from "react-toastify";
+import { useAuth } from "../src/context/AuthContext";
 import { Dropzone } from "../components/Dropzone";
 import {
   baseName,
@@ -14,9 +15,12 @@ import {
   typeLabel,
 } from "../utils/imageTools";
 import { saveToHistory } from "../utils/historyDB.js";
+import { getOwner } from "../utils/historyOwner";
 import "./ImageTool.css";
 
 export const Compress = () => {
+  const { user } = useAuth();
+
   const [file, setFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState("");
   const [quality, setQuality] = useState(75);
@@ -28,7 +32,9 @@ export const Compress = () => {
   // JPEG stays JPEG. Everything else becomes WebP, because PNG can't be lossy.
   const outType = file?.type === "image/jpeg" ? "image/jpeg" : "image/webp";
   const outExt = outType === "image/jpeg" ? "jpg" : "webp";
-  const downloadName = file ? `${baseName(file.name)}-compressed.${outExt}` : "";
+  const downloadName = file
+    ? `${baseName(file.name)}-compressed.${outExt}`
+    : "";
 
   useEffect(() => {
     if (!file) return;
@@ -81,12 +87,13 @@ export const Compress = () => {
   const handleDownload = async () => {
     toast.success("Download started", { toastId: "download" });
 
-    // Save one history entry per result, even if the button is clicked twice
+    // One history entry per result, even if the button is clicked twice
     if (!result || savedRef.current === result.url) return;
     savedRef.current = result.url;
 
     try {
       await saveToHistory({
+        owner: getOwner(user),
         tool: "compress",
         fileName: downloadName,
         originalName: file.name,

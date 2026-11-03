@@ -8,7 +8,9 @@ import {
   FaTrashAlt,
 } from "react-icons/fa";
 import { toast } from "react-toastify";
+import { useAuth } from "../src/context/AuthContext";
 import { clearHistory, deleteHistory, getHistory } from "../utils/historyDB.js";
+import { getOwner } from "../utils/historyOwner";
 import { formatBytes } from "../utils/imageTools";
 import "./History.css";
 
@@ -55,20 +57,28 @@ const Thumb = ({ blob }) => {
 };
 
 export const History = () => {
+  const { user, isLoading: authLoading } = useAuth();
+  const owner = authLoading ? null : getOwner(user);
+
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("all");
   const [confirming, setConfirming] = useState(false);
 
+  // Reload whenever the logged-in user changes
   useEffect(() => {
-    getHistory()
+    if (!owner) return;
+
+    setLoading(true);
+    setConfirming(false);
+    getHistory(owner)
       .then(setItems)
       .catch((err) => {
         console.error("Could not load history:", err);
         setItems([]);
       })
       .finally(() => setLoading(false));
-  }, []);
+  }, [owner]);
 
   const stats = useMemo(() => {
     const saved = items.reduce(
@@ -105,7 +115,7 @@ export const History = () => {
 
   const clearAll = async () => {
     try {
-      await clearHistory();
+      await clearHistory(owner);
       setItems([]);
       setConfirming(false);
       toast.success("History cleared", { toastId: "history" });
@@ -126,8 +136,12 @@ export const History = () => {
           {items.length > 0 &&
             (confirming ? (
               <div className="history-confirm">
-                <span>Delete everything?</span>
-                <button type="button" className="history-danger" onClick={clearAll}>
+                <span>Delete all history?</span>
+                <button
+                  type="button"
+                  className="history-danger"
+                  onClick={clearAll}
+                >
                   Yes, clear
                 </button>
                 <button
@@ -161,8 +175,10 @@ export const History = () => {
             <span className="history-empty-icon" aria-hidden="true">
               <FaHistory />
             </span>
-            <h2>Nothing here yet</h2>
-            <p>Images you download will show up here so you can get them again.</p>
+            <h2>No history yet</h2>
+            <p>
+              Images you download will appear here so you can get them again.
+            </p>
             <Link to="/compress" className="history-cta">
               Compress an image
             </Link>

@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { Header } from "../Header";
 import { Footer } from "../Footer";
@@ -13,7 +14,15 @@ export const AppLayout = () => {
     <div className="app-shell">
       {!hideChrome && <Header />}
       <main className="app-main">
-        <Outlet />
+        <Suspense
+          fallback={
+            <div className="route-loading" role="status" aria-label="Loading">
+              <span />
+            </div>
+          }
+        >
+          <Outlet />
+        </Suspense>
       </main>
       {!hideChrome && <Footer />}
     </div>

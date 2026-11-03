@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import { connectToDB } from "./utils/connect.js";
 import { router } from "./routes/auth-route.js";
 import { errorMiddleware } from "./middlewares/error-middleware.js";
+import { authLimiter, globalLimiter } from "./middlewares/rateLimit.js";
 
 const app = express();
 
@@ -15,6 +16,8 @@ const allowedOrigins = [
   process.env.CLIENT_URL,
 ].filter(Boolean);
 
+app.set("trust proxy", 1);
+
 app.use(cors({
   origin: allowedOrigins,
   credentials: true,
@@ -22,6 +25,10 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+app.use(globalLimiter);
+app.use("/login", authLimiter);
+app.use("/register", authLimiter);
 
 app.use("/", router);
 

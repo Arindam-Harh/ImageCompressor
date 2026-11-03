@@ -1,6 +1,6 @@
 const DB_NAME = "image-tools";
 const STORE = "history";
-const MAX_ITEMS = 20;
+const MAX_ITEMS = 20; // per user
 
 const openDB = () =>
   new Promise((resolve, reject) => {
@@ -28,26 +28,36 @@ const run = async (mode, action) => {
   });
 };
 
-export const getHistory = async () => {
+// Entries saved before this change have no owner, so they count as guest items
+const ownerOf = (entry) => entry.owner ?? "guest";
+
+export const getHistory = async (owner) => {
   const all = (await run("readonly", (s) => s.getAll())) || [];
-  return all.sort((a, b) => b.createdAt - a.createdAt);
+  return all
+    .filter((entry) => ownerOf(entry) === owner)
+    .sort((a, b) => b.createdAt - a.createdAt);
 };
 
 export const deleteHistory = (id) => run("readwrite", (s) => s.delete(id));
 
-export const clearHistory = () => run("readwrite", (s) => s.clear());
+// Clears only this owner's entries, never someone else's
+export const clearHistory = async (owner) => {
+  const mine = await getHistory(owner);
+  for (const entry of mine) {
+    await deleteHistory(entry.id);
+  }
+};
 
 const addHistory = async (entry) => {
   await run("readwrite", (s) => s.add(entry));
 
-  // Keep only the newest MAX_ITEMS entries
-  const all = await getHistory();
-  for (const old of all.slice(MAX_ITEMS)) {
+  // Keep only the newest MAX_ITEMS entries for this owner
+  const mine = await getHistory(entry.owner);
+  for (const old of mine.slice(MAX_ITEMS)) {
     await deleteHistory(old.id);
   }
 };
 
-// Small square thumbnail (cover-cropped) so the list stays light
 const makeThumb = async (blob, size = 96) => {
   const bitmap = await createImageBitmap(blob);
   const scale = Math.max(size / bitmap.width, size / bitmap.height);
@@ -64,6 +74,7 @@ const makeThumb = async (blob, size = 96) => {
 };
 
 export const saveToHistory = async ({
+  owner = "guest",
   tool,
   fileName,
   originalName,
@@ -74,7 +85,8 @@ export const saveToHistory = async ({
 }) => {
   const thumb = await makeThumb(blob);
   await addHistory({
-    tool, // "compress" or "convert"
+    owner,
+    tool,
     name: fileName,
     originalName,
     fromLabel,
