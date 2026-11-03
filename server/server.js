@@ -13,6 +13,7 @@ const PORT = process.env.PORT || 5000;
 const allowedOrigins = [
   "http://localhost:5173",
   "https://image-compressor-converter.netlify.app",
+  "https://imagezentool.netlify.app"
   process.env.CLIENT_URL,
 ].filter(Boolean);
 
